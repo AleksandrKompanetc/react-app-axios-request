@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
-import axios from axios;
+import axios from 'axios';
 import './App.css';
+import Card from './Card';
 
 interface Item {
   id: number
@@ -45,7 +46,7 @@ function App() {
 
       <div className='card-list'>
         {items.map((item) => (
-          
+          <Card key={item.id} title={item.title} description={item.description} />
         ))}
       </div>
     </div>
