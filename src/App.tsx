@@ -27,21 +27,41 @@ function App() {
         .catch((error) => console.error('Error fetching data:', error))
   }, [])
 
+  const addCard = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    const newItem: Item = {
+      id: items.length + 1,
+      title,
+      description
+    }
+
+    axios.post('https://jsonplaceholder.typicode.com/posts', newItem)
+    .then((response) => {
+      setItems([...items, newItem])
+      setTitle('')
+      setDescription('')
+    })
+      .catch((error) => console.error('Error adding card', error))
+  }
+
   return (
     <div className="App">
       <h1>Card List</h1>
-      <form>
+      <form onSubmit={addCard}>
         <input 
           type="text"
           value={title}
+          onChange={(e) => setTitle(e.target.value)}
           placeholder='Enter title...' 
         />
         <input 
           type="text"
           value={description} 
+          onChange={(e) => setDescription(e.target.value)}
           placeholder='Enter description...'
         />
-        <button>Add Card</button>
+        <button type='submit'>Add Card</button>
       </form>
 
       <div className='card-list'>
